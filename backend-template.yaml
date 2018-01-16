@@ -20,7 +20,7 @@ parameters:
   value: ''
 - description: URL to the source code repository
   name: SOURCE_REPOSITORY_URL
-  value: https://github.com/BoZhaoUTSC/backend-war.git
+  value: http://BoZhaoUTSC@52.233.32.176:7990/scm/oc/backend-war.git
   required: true
 - description: Git branch/tag reference.
   name: SOURCE_REPOSITORY_REF
