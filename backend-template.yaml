@@ -1,0 +1,153 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  annotations:
+    description: demo backend application
+    tags: backend, java, spring, gradle, rest, liber-profile
+    version: 1.0.0
+  name: backend
+labels:
+  template: backend
+parameters:
+- description: The name for the application.
+  name: APPLICATION_NAME
+  value: backend
+  required: true
+- description: 'Custom hostname for service routes.  Leave blank for default hostname,
+    e.g.: <application-name>.<project>.<default-domain-suffix>'
+  name: APPLICATION_HOSTNAME
+  value: ''
+- description: URL to the source code repository
+  name: SOURCE_REPOSITORY_URL
+  value: https://github.com/BoZhaoUTSC/backend-war.git
+  required: true
+- description: Git branch/tag reference.
+  name: SOURCE_REPOSITORY_REF
+  value: master
+  required: true
+- description: Path within Git project to build; empty for root project directory.
+  name: CONTEXT_DIR
+  value: ''
+- description: It is necessary to accept the terms of the WebSphere Application Server
+  name: LICENSE
+  value: accept
+  required: true
+objects:
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}"
+    labels:
+      application: "${APPLICATION_NAME}"
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}"
+    labels:
+      application: "${APPLICATION_NAME}"
+  spec:
+    strategy:
+      type: Rolling
+    triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "${APPLICATION_NAME}"
+        from:
+          kind: ImageStreamTag
+          name: "${APPLICATION_NAME}:latest"
+    replicas: 1
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}"
+    template:
+      metadata:
+        name: "${APPLICATION_NAME}"
+        labels:
+          deploymentConfig: "${APPLICATION_NAME}"
+          application: "${APPLICATION_NAME}"
+      spec:
+        containers:
+        - name: "${APPLICATION_NAME}"
+          readinessProbe:
+            httpGet:
+              path: /backend/greeting
+              port: 9080
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+          livenessProbe:
+            exec:
+              command:
+              - /opt/health.sh
+            initialDelaySeconds: 120
+            timeoutSeconds: 30
+
+          image: "${APPLICATION_NAME}"
+          ports:
+          - containerPort: 9080
+            protocol: TCP
+          env:
+          - name: LICENSE
+            value: "${LICENSE}"
+          - name: ENV
+            value: dev
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}"
+  spec:
+    source:
+      type: Git
+      git:
+        uri: "${SOURCE_REPOSITORY_URL}"
+        ref: "${SOURCE_REPOSITORY_REF}"
+      contextDir: "${CONTEXT_DIR}"
+    strategy:
+      type: Docker
+      dockerStrategy:
+        nocache: true
+        env:
+        - name: HTTP_PROXY
+          value: ''
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "${APPLICATION_NAME}:latest"
+    triggers:
+    - type: ConfigChange
+- kind: Service
+  apiVersion: v1
+  spec:
+    ports:
+    - name: 9080-tcp
+      protocol: TCP
+      port: 9080
+      targetPort: 9080
+      nodePort: 0
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}"
+  metadata:
+    name: "${APPLICATION_NAME}"
+    labels:
+      application: "${APPLICATION_NAME}"
+    annotations:
+      description: The web server's http port.
+- kind: Route
+  apiVersion: v1
+  id: "${APPLICATION_NAME}"
+  metadata:
+    name: "${APPLICATION_NAME}"
+    labels:
+      application: "${APPLICATION_NAME}"
+    annotations:
+      description: Route for application's http service.
+  spec:
+    host: "${APPLICATION_HOSTNAME}"
+    to:
+      kind: Service
+      name: "${APPLICATION_NAME}"
+      weight: 100
+    port:
+      targetPort: 9080-tcp
+    wildcardPolicy: None
