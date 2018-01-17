@@ -1,4 +1,5 @@
 #!/bin/sh
+
 cd /opt
 wget localhost:9080/backend/greeting 
 
