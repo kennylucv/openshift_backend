@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# usage
+# ./test-backend dev
+
+# read environment from command line
+env=$1
+
+url="http://backend-$env-env.52.233.32.176.nip.io/backend/welcome"
+
+while true
+do
+    curl $url
+    sleep 1
+done
