@@ -35,6 +35,12 @@ public class GreetingController {
          return new ResponseEntity("greetings",HttpStatus.OK);
     }
 
+    @RequestMapping("/welcome")
+    public ResponseEntity getPet() {
+        String msg = "Hello from dBank!";
+        return new ResponseEntity(msg, HttpStatus.OK);
+    }
+
     @CrossOrigin
     @RequestMapping(value = "/api/validate", method=RequestMethod.POST)
     public ResponseEntity validate(@RequestBody UserModel login){//, @RequestBody String password) {
