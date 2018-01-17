@@ -11,5 +11,6 @@ url="http://backend-$env-env.52.233.32.176.nip.io/backend/welcome"
 while true
 do
     curl $url
+    echo ""
     sleep 1
 done
