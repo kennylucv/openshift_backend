@@ -24,7 +24,6 @@ public class UserModel {
     private String  mongoUser       = "admin";
     private String  mongoPass       = "admin";
     private String  databaseName    = "sampledb";
-    //private String  databaseName    = "test_db";
     private String  mongoHost       = "database";
     private int     mongoPort       = 27017;
 
@@ -32,10 +31,6 @@ public class UserModel {
     public UserModel(){
     }
 
-    // public Greeting(long id, String content) {
-    //     this.id = id;
-    //     this.content = content;
-    // }
 
     public UserModel(String username){
         this.username = username;
