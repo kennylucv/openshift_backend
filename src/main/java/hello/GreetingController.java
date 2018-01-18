@@ -14,22 +14,13 @@ import org.springframework.http.MediaType;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
-
 @RestController
 public class GreetingController {
 
-    // @Autowired
-    // private final UserRepository userRepository;
-
-    // GreetingController(UserRepository userRepository){
-    //     //this.userRepository = userRepository;
-    // }
-
     @RequestMapping("/greeting")
     public ResponseEntity greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        // return new Greeting(counter.incrementAndGet(),
-        //                     String.format(template, name));
-         return new ResponseEntity("greetings",HttpStatus.OK);
+        loadConfig();
+        return new ResponseEntity("greetings",HttpStatus.OK);
     }
 
     @RequestMapping("/welcome")
