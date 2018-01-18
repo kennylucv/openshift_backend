@@ -1,11 +1,11 @@
 #!/bin/sh
 
 cd /opt
-wget localhost:9080/backend/greeting 
+wget localhost:9080/backend/health_check 
 
-MYVAR=$(cat greeting)
+MYVAR=$(cat health_check)
 rm -f greeting
-if [ "$MYVAR" = "greetings" ] 
+if [ "$MYVAR" = "health_check_passed" ] 
 then
     echo `date` > health.log
     exit 0
