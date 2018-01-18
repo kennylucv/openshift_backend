@@ -10,6 +10,11 @@ import org.bson.Document;
 import com.mongodb.*;
 import static com.mongodb.client.model.Filters.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class UserModel {
 
     private String username;
@@ -25,6 +30,8 @@ public class UserModel {
     private String  mongoHost       = "database";
     private int     mongoPort       = 27017;
 
+    private Properties prop = new Properties();
+	private InputStream input = null;
 
     public UserModel(){
     }
@@ -83,14 +90,13 @@ public class UserModel {
 
     public void getUserAccounts(){
 
+        loadConfig();
+
         // Set credentials      
         MongoCredential credential = MongoCredential.createCredential(mongoUser, databaseName, mongoPass.toCharArray());
         ServerAddress serverAddress = new ServerAddress(mongoHost, mongoPort);
 
-        // Mongo Client
         MongoClient mongoClient = new MongoClient(serverAddress,Arrays.asList(credential)); 
-        
-        //MongoClient mongoClient = new MongoClient("localhost",27017);
         
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection("users");
@@ -125,4 +131,30 @@ public class UserModel {
             }
 		}
 	};
+
+    public void loadConfig(){
+        try {
+            input = new FileInputStream("config.properties");
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            this.mongoHost = prop.getProperty("dbhostname");
+            this.mongoUser = prop.getProperty("dbuser");
+            this.mongoPass = prop.getProperty("dbpassword");
+        } 
+        catch (IOException ex) {
+           ex.printStackTrace();
+        } 
+        finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
