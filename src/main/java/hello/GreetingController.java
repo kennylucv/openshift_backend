@@ -25,7 +25,7 @@ public class GreetingController {
 
     @RequestMapping("/welcome")
     public ResponseEntity getPet() {
-        String msg = "Hola from dBank!";
+        String msg = "Bonjour from dBank!";
         return new ResponseEntity(msg, HttpStatus.OK);
     }
 
