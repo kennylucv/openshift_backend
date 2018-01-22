@@ -93,12 +93,12 @@ objects:
           - name: ENV
             value: dev
         volumes:
-  		  - name: configmount
-  	        configMap:
-              name: config
-              items:
-              - key: dbconfig
-                path: config/config.properties
+  		- name: configmount
+  	      configMap:
+            name: config
+            items:
+            - key: dbconfig
+              path: config/config.properties
 - kind: BuildConfig
   apiVersion: v1
   metadata:
