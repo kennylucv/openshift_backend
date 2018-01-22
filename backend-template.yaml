@@ -92,12 +92,12 @@ objects:
           - name: ENV
             value: dev
           volumeMounts:
-            - name: config.properties
+            - name: config-properties
               mountPath: "/etc/config/"
         volumes:
-        - name: config.properties
+        - name: config-properties
           configMap:
-            name: config.properties
+            name: config-properties
 - kind: BuildConfig
   apiVersion: v1
   metadata:
