@@ -14,6 +14,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class UserModel {
 
     private String username;
@@ -93,7 +98,13 @@ public class UserModel {
         // Set credentials      
         MongoCredential credential = MongoCredential.createCredential(mongoUser, databaseName, mongoPass.toCharArray());
         ServerAddress serverAddress = new ServerAddress(mongoHost, mongoPort);
+<<<<<<< HEAD
         MongoClient mongoClient = new MongoClient(serverAddress,Arrays.asList(credential));         
+=======
+
+        MongoClient mongoClient = new MongoClient(serverAddress,Arrays.asList(credential)); 
+        
+>>>>>>> 40241381933edfa6f3f71d6a3ad5f850c870b5f6
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection("users");
         collection.find(eq("username", this.username)).forEach(getAccountsPrintBlock);
@@ -130,7 +141,11 @@ public class UserModel {
 
     public void loadConfig(){
         try {
+<<<<<<< HEAD
             input = new FileInputStream("/config/config.properties");
+=======
+            input = new FileInputStream("config.properties");
+>>>>>>> 40241381933edfa6f3f71d6a3ad5f850c870b5f6
 
             // load a properties file
             prop.load(input);

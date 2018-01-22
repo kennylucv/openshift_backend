@@ -19,12 +19,16 @@ public class GreetingController {
 
     @RequestMapping("/greeting")
     public ResponseEntity greeting(@RequestParam(value="name", defaultValue="World") String name) {
+<<<<<<< HEAD
+=======
+        loadConfig();
+>>>>>>> 40241381933edfa6f3f71d6a3ad5f850c870b5f6
         return new ResponseEntity("greetings",HttpStatus.OK);
     }
 
     @RequestMapping("/welcome")
     public ResponseEntity getPet() {
-        String msg = "Hola from dBank!";
+        String msg = "Bonjour from dBank!";
         return new ResponseEntity(msg, HttpStatus.OK);
     }
 
