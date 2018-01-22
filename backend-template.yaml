@@ -97,7 +97,7 @@ objects:
             name: config
             items:
             - key: config.properties
-              path: "config.properties"
+              path: "config"
 - kind: BuildConfig
   apiVersion: v1
   metadata:
