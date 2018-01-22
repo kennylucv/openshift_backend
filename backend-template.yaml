@@ -93,7 +93,7 @@ objects:
           - name: ENV
             value: dev
   volumes:
-  - name: configmount
+    name: configmount
   	configMap:
       name: config
       items:
