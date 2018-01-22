@@ -136,7 +136,7 @@ public class UserModel {
 
     public void loadConfig(){
         try {
-            input = new FileInputStream("/config/config.properties");
+            input = new FileInputStream("/etc/config/config.properties");
 
             // load a properties file
             prop.load(input);
