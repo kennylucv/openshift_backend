@@ -82,7 +82,6 @@ objects:
               - /opt/health.sh
             initialDelaySeconds: 120
             timeoutSeconds: 30
-
           image: "${APPLICATION_NAME}"
           ports:
           - containerPort: 9080
