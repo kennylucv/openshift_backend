@@ -46,6 +46,14 @@ objects:
     name: "${APPLICATION_NAME}"
     labels:
       application: "${APPLICATION_NAME}"
+  volumes:
+  - name: config-mount
+  	configMap:
+      name: config
+      items:
+      - key: dbconfig
+        path: config/config.properties
+
   spec:
     strategy:
       type: Rolling
