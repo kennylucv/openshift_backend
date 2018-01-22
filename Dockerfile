@@ -6,6 +6,7 @@ RUN chmod 777 -R /opt/
 RUN chmod 777 -R /logs/
 
 # Add binary deployment artifact to 'dropins' folder
+COPY config.properties /config/
 COPY backend.war /opt/ibm/wlp/usr/servers/defaultServer/dropins/
 
 # health check

@@ -19,7 +19,6 @@ public class GreetingController {
 
     @RequestMapping("/greeting")
     public ResponseEntity greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        loadConfig();
         return new ResponseEntity("greetings",HttpStatus.OK);
     }
 
@@ -69,5 +68,4 @@ public class GreetingController {
 
         return new ResponseEntity(jResponse,responseHeaders,HttpStatus.OK);
     }
-
 }

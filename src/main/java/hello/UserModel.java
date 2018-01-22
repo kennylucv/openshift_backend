@@ -9,7 +9,6 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import com.mongodb.*;
 import static com.mongodb.client.model.Filters.*;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,10 +23,10 @@ public class UserModel {
     private ArrayList<String> accountTypes = new ArrayList<String>();
     private ArrayList<String> accountAmounts = new ArrayList<String>();
     
-    private String  mongoUser       = "admin";
-    private String  mongoPass       = "admin";
+    private String  mongoUser       = "";
+    private String  mongoPass       = "";
     private String  databaseName    = "sampledb";
-    private String  mongoHost       = "database";
+    private String  mongoHost       = "";
     private int     mongoPort       = 27017;
 
     private Properties prop = new Properties();
@@ -35,7 +34,6 @@ public class UserModel {
 
     public UserModel(){
     }
-
 
     public UserModel(String username){
         this.username = username;
@@ -95,9 +93,7 @@ public class UserModel {
         // Set credentials      
         MongoCredential credential = MongoCredential.createCredential(mongoUser, databaseName, mongoPass.toCharArray());
         ServerAddress serverAddress = new ServerAddress(mongoHost, mongoPort);
-
-        MongoClient mongoClient = new MongoClient(serverAddress,Arrays.asList(credential)); 
-        
+        MongoClient mongoClient = new MongoClient(serverAddress,Arrays.asList(credential));         
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         MongoCollection<Document> collection = database.getCollection("users");
         collection.find(eq("username", this.username)).forEach(getAccountsPrintBlock);
@@ -134,7 +130,7 @@ public class UserModel {
 
     public void loadConfig(){
         try {
-            input = new FileInputStream("config.properties");
+            input = new FileInputStream("/config/config.properties");
 
             // load a properties file
             prop.load(input);
