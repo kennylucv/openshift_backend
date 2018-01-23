@@ -38,16 +38,19 @@ public class UserModel {
 	private InputStream input = null;
 
     public UserModel(){
+	loadConfig();
     }
 
     public UserModel(String username){
         this.username = username;
         this.password = "";
+	loadConfig();
     }
 
     public UserModel(String username, String password){
         this.username = username;
         this.password = password;
+	loadConfig();
     }
 
     public String getPassword() {
