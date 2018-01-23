@@ -17,9 +17,9 @@ import java.util.ArrayList;
 @RestController
 public class GreetingController {
 
-    @RequestMapping("/greeting")
+    @RequestMapping("/health_check")
     public ResponseEntity greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return new ResponseEntity("greetings",HttpStatus.OK);
+        return new ResponseEntity("health_check_passed",HttpStatus.OK);
     }
 
     @RequestMapping("/welcome")

@@ -72,7 +72,7 @@ objects:
         - name: "${APPLICATION_NAME}"
           readinessProbe:
             httpGet:
-              path: /backend/greeting
+              path: /backend/health_check
               port: 9080
             initialDelaySeconds: 30
             timeoutSeconds: 1
