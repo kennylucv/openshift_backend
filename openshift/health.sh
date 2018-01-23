@@ -4,7 +4,7 @@ cd /opt
 wget localhost:9080/backend/health_check 
 
 MYVAR=$(cat health_check)
-rm -f greeting
+rm -f health_check
 if [ "$MYVAR" = "health_check_passed" ] 
 then
     echo `date` > health.log
